@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🎬 CineList — Plataforma de Sugestões de Filmes
 
 Aplicação web Java com arquitetura **MVC**, padrões **DAO** e **Service**, banco de dados **MySQL** e interface dinâmica em **JSP + HTML/CSS**.
@@ -97,5 +96,3 @@ pfilmes/
 - [x] Avaliar filme com nota de 1 a 5 estrelas por categoria
 - [x] Ranking de filmes por categoria com média e total de avaliações
 =======
-# plataforma_de_sugestoes_de_filmes
->>>>>>> d186aae33a27846482c83a714c40868ebc395c62
