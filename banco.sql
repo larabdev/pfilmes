@@ -40,3 +40,18 @@ CREATE TABLE IF NOT EXISTS avaliacoes (
     FOREIGN KEY (filme_id)     REFERENCES filmes(id)     ON DELETE CASCADE,
     FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE CASCADE
 );
+
+--Tabela de usuários
+CREATE TABLE IF NOT EXISTS usuarios (
+    id    INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    senha VARCHAR(32)  NOT NULL   -- MD5 hash
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO categorias (nome) VALUES ('Ação'), ('Comédia'), ('Drama'), ('Terror'), ('Ficção Científica');
+
+-- Usuário padrão: admin@filmes.com / senha: 123456
+-- MD5("123456") = e10adc3949ba59abbe56e057f20f883e
+
+INSERT INTO usuarios (email, senha) VALUES
+    ('admin@filmes.com', 'e10adc3949ba59abbe56e057f20f883e');
