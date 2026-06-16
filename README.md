@@ -238,7 +238,9 @@ Ranking por categoria:
 - `/avaliacoes?action=ranking&categoriaId=1`: ranking.
 
 ##Como compilar
+
 No terminal PowerShell do VS Code:
+
 $env:JAVA_HOME="C:\Program Files\Java\jdk1.8.0_202"
 $env:Path="$env:JAVA_HOME\bin;$env:Path"
 
@@ -250,6 +252,7 @@ javac -encoding UTF-8 `
   (Get-ChildItem src\main\java -Recurse -Filter *.java | ForEach-Object { $_.FullName })
 
 ##Como gerar o WAR (copie a pasta para tomcat/webapps):
+
 New-Item -ItemType Directory -Force -Path target\*nome pasta*-war
 Copy-Item src\main\webapp\* target\*nome pasta*-war -Recurse -Force
 
@@ -262,4 +265,5 @@ Copy-Item "..\WEB-INF\lib\mysql-connector-j-9.7.0.jar" target\*nome pasta-war\WE
 jar -cf target\*nome pasta.war -C target\*nome pasta-war .
 
 ##Como executar no Tomcat:
+
 Copy-Item target\*nome pasta.war C:\xampp\tomcat\webapps\*nome pasta.war -Force
