@@ -237,7 +237,7 @@ Ranking por categoria:
 - `/avaliacoes?action=form&filmeId=1`: avaliar filme.
 - `/avaliacoes?action=ranking&categoriaId=1`: ranking.
 
-##Como compilar
+## Como compilar
 
 No terminal PowerShell do VS Code:
 
@@ -250,8 +250,8 @@ javac -encoding UTF-8 `
   -cp "C:\xampp\tomcat\lib\servlet-api.jar" `
   -d target\classes `
   (Get-ChildItem src\main\java -Recurse -Filter *.java | ForEach-Object { $_.FullName })
-
-##Como gerar o WAR (copie a pasta para tomcat/webapps):
+  
+## Como gerar o WAR (copie a pasta para tomcat/webapps):
 
 New-Item -ItemType Directory -Force -Path target\*nome pasta*-war
 Copy-Item src\main\webapp\* target\*nome pasta*-war -Recurse -Force
@@ -264,6 +264,6 @@ Copy-Item "..\WEB-INF\lib\mysql-connector-j-9.7.0.jar" target\*nome pasta-war\WE
 
 jar -cf target\*nome pasta.war -C target\*nome pasta-war .
 
-##Como executar no Tomcat:
+## Como executar no Tomcat:
 
 Copy-Item target\*nome pasta.war C:\xampp\tomcat\webapps\*nome pasta.war -Force
