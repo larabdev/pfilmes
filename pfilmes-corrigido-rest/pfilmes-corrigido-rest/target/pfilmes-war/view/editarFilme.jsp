@@ -1,0 +1,107 @@
+<%@ page import="model.Filme" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Filme filme = (Filme) request.getAttribute("filme");
+%>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>CineList - Editar Filme</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #141414; color: #fff; }
+        header {
+            background: #1a1a2e;
+            padding: 18px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #e50914;
+        }
+        header h1 { color: #e50914; font-size: 24px; }
+        nav a { color: #ccc; text-decoration: none; margin-left: 20px; font-size: 14px; }
+        nav a:hover { color: #e50914; }
+        .container { max-width: 600px; margin: 50px auto; padding: 0 20px; }
+        h2 { font-size: 24px; margin-bottom: 28px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; color: #aaa; font-size: 14px; }
+        input, select, textarea {
+            width: 100%; padding: 12px 14px;
+            background: #1e1e1e; border: 1px solid #333; border-radius: 6px;
+            color: #fff; font-size: 14px;
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #f0a500; }
+        textarea { resize: vertical; height: 90px; }
+        .btn {
+            background: #f0a500; color: #fff; padding: 12px 28px;
+            border: none; border-radius: 6px; font-size: 15px; font-weight: bold;
+            cursor: pointer; width: 100%; margin-top: 8px;
+        }
+        .btn:hover { background: #c48600; }
+        .back { display: inline-block; margin-bottom: 20px; color: #aaa; text-decoration: none; font-size: 14px; }
+        .back:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎬 CineList</h1>
+        <nav>
+            <a href="${pageContext.request.contextPath}/filmes">Filmes</a>
+            <a href="${pageContext.request.contextPath}/filmes?action=novo">Cadastrar</a>
+            <a href="${pageContext.request.contextPath}/avaliacoes?action=ranking&categoriaId=1">Ranking</a>
+            <a href="${pageContext.request.contextPath}/login?action=logout">Sair</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a class="back" href="${pageContext.request.contextPath}/filmes">← Voltar para lista</a>
+        <h2>Editar Filme</h2>
+
+        <% if (filme != null) { %>
+        <form method="post" action="${pageContext.request.contextPath}/filmes">
+            <input type="hidden" name="action" value="atualizar">
+            <input type="hidden" name="id" value="<%= filme.getId() %>">
+
+            <div class="form-group">
+                <label for="titulo">Título *</label>
+                <input type="text" id="titulo" name="titulo" value="<%= filme.getTitulo() %>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ano">Ano de Lançamento *</label>
+                <input type="number" id="ano" name="ano" value="<%= filme.getAnoLancamento() %>" min="1888" max="2100" required>
+            </div>
+
+            <div class="form-group">
+                <label for="diretor">Diretor</label>
+                <input type="text" id="diretor" name="diretor" value="<%= filme.getDiretor() != null ? filme.getDiretor() : "" %>">
+            </div>
+
+            <div class="form-group">
+                <label for="genero">Gênero</label>
+                <select id="genero" name="genero">
+                    <option value="">-- Selecione --</option>
+                    <%
+                        String[] generos = {"Ação","Aventura","Comédia","Drama","Ficção Científica","Horror","Romance","Suspense","Animação","Documentário"};
+                        for (String g : generos) {
+                            String sel = g.equals(filme.getGenero()) ? "selected" : "";
+                    %>
+                        <option value="<%= g %>" <%= sel %>><%= g %></option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sinopse">Sinopse</label>
+                <textarea id="sinopse" name="sinopse"><%= filme.getSinopse() != null ? filme.getSinopse() : "" %></textarea>
+            </div>
+
+            <button type="submit" class="btn">Salvar Alterações</button>
+        </form>
+        <% } else { %>
+            <p style="color:#e50914;">Filme não encontrado.</p>
+        <% } %>
+    </div>
+</body>
+</html>
