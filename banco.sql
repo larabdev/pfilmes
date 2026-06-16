@@ -57,9 +57,7 @@ WHERE NOT EXISTS (
     SELECT 1 FROM usuarios WHERE email = 'admin@filmes.com'
 );
 
-    ('admin@filmes.com', 'e10adc3949ba59abbe56e057f20f883e');
-
---MODIFICAÇOES FEITAS--
+--MODIFICAÇOES FEITAS AO LONGO DO TEMPO--
 
 USE filmes_db;
 ALTER TABLE usuarios ADD COLUMN nome VARCHAR(150);
