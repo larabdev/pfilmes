@@ -93,18 +93,6 @@ pfilme-corrigido-rest/
     ├── pfilme-corrigido-rest-war/
     └── pfilme-corrigido-rest.war
 
-## Como rodar no VS Code com Tomcat
-
-1. Execute o script `banco.sql` no MySQL.
-2. Confira a conexao em `src/main/java/util/ConnectionFactory.java`.
-3. Compile o projeto e gere o WAR.
-4. Publique o arquivo `pfilmes.war` na pasta `webapps` do Tomcat.
-5. Acesse:
-
-```text
-http://localhost:8080/pfilmes
-```
-
 Usuario padrao:
 
 - E-mail: `admin@filmes.com`
