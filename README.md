@@ -1,207 +1,277 @@
 # 🎬 CineList — Plataforma de Sugestões de Filmes
 
-Aplicação web Java com arquitetura **MVC**, padrões **DAO**, **Service** e **Singleton**, autenticação com **JWT**, banco de dados **MySQL** e interface dinâmica em **JSP + HTML/CSS**.
+Site MVC em Java para sugestoes e avaliacoes de filmes, com telas JSP, banco MySQL, autenticacao JWT e API RESTful em JSON.
 
----
+## Tecnologias utilizadas
 
-## 📁 Estrutura do Projeto
+- Java
+- JSP
+- Servlets
+- Apache Tomcat
+- MySQL
+- JDBC
+- HTML/CSS
+- API RESTful
+- JSON
+- JWT
 
-```
-pfilmes-corrigido/
+## Funcionalidades
 
+- Login de usuario
+- Cadastro de filmes
+- Listagem de filmes
+- Edicao de filmes
+- Exclusao de filmes
+- Cadastro de avaliacoes
+- Listagem de avaliacoes
+- Edicao de avaliacoes
+- Exclusao de avaliacoes
+- Ranking de filmes por categoria
+- API RESTful com `GET`, `POST`, `PUT` e `DELETE`
+
+## Estrutura de pastas
+
+```text
+pfilme-corrigido-rest/
+│
 ├── banco.sql
-
 ├── README.md
+├── pom.xml
+│
+├── src/
+│   └── main/
+│       │
+│       ├── java/
+│       │   │
+│       │   ├── controller/
+│       │   │   ├── AuthController.java
+│       │   │   ├── FilmeController.java
+│       │   │   └── AvaliacaoController.java
+│       │   │
+│       │   ├── dao/
+│       │   │   ├── UsuarioDAO.java
+│       │   │   ├── FilmeDAO.java
+│       │   │   ├── AvaliacaoDAO.java
+│       │   │   └── CategoriaDAO.java
+│       │   │
+│       │   ├── filter/
+│       │   │   └── JwtFilter.java
+│       │   │
+│       │   ├── model/
+│       │   │   ├── Usuario.java
+│       │   │   ├── Filme.java
+│       │   │   ├── Avaliacao.java
+│       │   │   └── Categoria.java
+│       │   │
+│       │   ├── service/
+│       │   │   ├── AuthService.java
+│       │   │   ├── FilmeService.java
+│       │   │   └── AvaliacaoService.java
+│       │   │
+│       │   └── util/
+│       │       ├── ConnectionFactory.java
+│       │       ├── JwtUtil.java
+│       │       └── JsonUtil.java
+│       │
+│       └── webapp/
+│           │
+│           ├── index.jsp
+│           ├── login.jsp
+│           │
+│           ├── view/
+│           │   ├── filmes.jsp
+│           │   ├── formFilme.jsp
+│           │   ├── editarFilme.jsp
+│           │   ├── avaliar.jsp
+│           │   └── ranking.jsp
+│           │
+│           └── WEB-INF/
+│               └── web.xml
+│
+└── target/
+    ├── classes/
+    ├── pfilme-corrigido-rest-war/
+    └── pfilme-corrigido-rest.war
 
-└── src/main/
+## Como rodar no VS Code com Tomcat
 
-├── java/
+1. Execute o script `banco.sql` no MySQL.
+2. Confira a conexao em `src/main/java/util/ConnectionFactory.java`.
+3. Compile o projeto e gere o WAR.
+4. Publique o arquivo `pfilmes.war` na pasta `webapps` do Tomcat.
+5. Acesse:
 
-│   ├── controller/
-
-│   │   ├── AuthController.java       ← Login e logout
-
-│   │   ├── FilmeController.java      ← CRUD de filmes
-
-│   │   └── AvaliacaoController.java  ← Avaliação e ranking
-
-│   ├── dao/
-
-│   │   ├── FilmeDAO.java
-
-│   │   ├── AvaliacaoDAO.java
-
-│   │   ├── CategoriaDAO.java
-
-│   │   └── UsuarioDAO.java
-
-│   ├── filter/
-
-│   │   └── JwtFilter.java            ← Filtro de autenticação JWT
-
-│   ├── model/
-
-│   │   ├── Filme.java
-
-│   │   ├── Avaliacao.java
-
-│   │   ├── Categoria.java
-
-│   │   └── Usuario.java
-
-│   ├── service/
-
-│   │   ├── AuthService.java
-
-│   │   ├── FilmeService.java
-
-│   │   └── AvaliacaoService.java
-
-│   └── util/
-
-│       ├── ConnectionFactory.java    ← Singleton
-
-│       └── JwtUtil.java              ← Geração e validação de tokens
-
-└── webapp/
-
-├── index.jsp                     ← Página inicial (requer login)
-
-├── login.jsp                     ← Tela de login
-
-├── WEB-INF/
-
-│   └── web.xml
-
-└── view/
-
-├── filmes.jsp
-
-├── formFilme.jsp
-
-├── editarFilme.jsp
-
-├── avaliar.jsp
-
-└── ranking.jsp
+```text
+http://localhost:8080/pfilmes
 ```
 
----
+Usuario padrao:
 
-## 🧱 Arquitetura MVC
-
-| Camada | Responsabilidade |
-|--------|-----------------|
-| **Model** | Classes de domínio: `Filme`, `Categoria`, `Avaliacao`, `Usuario` |
-| **View** | Páginas JSP — exibem os dados ao usuário |
-| **Controller** | Servlets — recebem requisições, chamam o Service e redirecionam para a View |
-| **Service** | Regras de negócio e validações |
-| **DAO** | Comunicação direta com o banco de dados |
-
----
-
-## 🔐 Autenticação JWT
-
-- O login valida e-mail e senha no banco e gera um token JWT via `JwtUtil`
-- O token é salvo na sessão HTTP
-- O `JwtFilter` intercepta todas as rotas protegidas (`/filmes`, `/avaliacoes`, `/avaliar`) e valida o token
-- Se o token for inválido ou ausente, o usuário é redirecionado para `login.jsp?erro=1`
-- Resposta para APIs: `{"erro":"Acesso não autorizado"}` com status 401
-
-**Credenciais padrão:**
 - E-mail: `admin@filmes.com`
 - Senha: `123456`
 
----
+## O que foi implementado
 
-## 🔄 Padrão Singleton — ConnectionFactory
+As rotas REST foram implementadas nos controllers existentes, sem criar controller separado:
 
-A classe `ConnectionFactory` implementa o padrão Singleton com double-checked locking:
+- `FilmeController` atende as telas JSP em `/filmes` e a API em `/api/filmes`.
+- `AvaliacaoController` atende as telas JSP em `/avaliacoes` e a API em `/api/avaliacoes`.
 
-```java
-public static ConnectionFactory getInstance() {
-    if (instance == null) {
-        synchronized (ConnectionFactory.class) {
-            if (instance == null) {
-                instance = new ConnectionFactory();
-            }
-        }
-    }
-    return instance;
+A API usa:
+
+- JSON no corpo da requisicao.
+- Verbos HTTP RESTful: `GET`, `POST`, `PUT` e `DELETE`.
+- CRUD completo para filmes.
+- CRUD completo para avaliacoes.
+- JWT no header `Authorization`.
+
+## Login
+
+`POST /login`
+
+```bash
+curl -X POST http://localhost:8080/pfilmes/login ^
+  -H "Accept: application/json" ^
+  -d "email=admin@filmes.com" ^
+  -d "senha=123456"
+```
+
+Resposta:
+
+```json
+{"token":"SEU_TOKEN_JWT"}
+```
+
+Use o token assim:
+
+```text
+Authorization: Bearer SEU_TOKEN_JWT
+```
+
+## API RESTful de filmes
+
+### Criar filme
+
+`POST /api/filmes`
+
+```json
+{
+  "titulo": "Interestelar",
+  "anoLancamento": 2014,
+  "diretor": "Christopher Nolan",
+  "genero": "Ficcao Cientifica",
+  "sinopse": "Viagem espacial."
 }
 ```
 
-Garante uma única instância da fábrica de conexões durante todo o ciclo de vida da aplicação.
+### Listar filmes
 
----
+`GET /api/filmes`
 
-## 📡 Endpoints da API
+### Buscar filme por id
 
-### Autenticação
-| Método | URL | Descrição |
-|--------|-----|-----------|
-| POST | `/login` | Realiza login e retorna token JWT |
-| GET | `/login?action=logout` | Encerra a sessão |
+`GET /api/filmes/1`
 
-### Filmes (requer autenticação)
-| Método | URL | Descrição |
-|--------|-----|-----------|
-| GET | `/filmes` | Lista todos os filmes |
-| GET | `/filmes?action=novo` | Exibe formulário de cadastro |
-| POST | `/filmes` (action=salvar) | Cadastra novo filme |
-| GET | `/filmes?action=editar&id=N` | Exibe formulário de edição |
-| POST | `/filmes` (action=atualizar) | Atualiza filme |
-| GET | `/filmes?action=deletar&id=N` | Exclui filme |
-| GET | `/filmes?action=buscar&id=N` | Busca filme por ID (retorna JSON) |
-| GET | `/filmes?action=listar` + Header `Accept: application/json` | Lista filmes em JSON |
+### Atualizar filme
 
-### Avaliações (requer autenticação)
-| Método | URL | Descrição |
-|--------|-----|-----------|
-| GET | `/avaliacoes?action=form&filmeId=N` | Exibe formulário de avaliação |
-| POST | `/avaliar` | Registra avaliação |
-| GET | `/avaliacoes?action=ranking&categoriaId=N` | Exibe ranking por categoria |
-| GET | `/avaliacoes?action=categorias` | Lista categorias (JSON) |
+`PUT /api/filmes/1`
 
----
-
-## ⚙️ Como executar
-
-### Pré-requisitos
-- JDK 8
-- Apache Tomcat 8.5 (via XAMPP)
-- MySQL 8.x
-- Conector JDBC MySQL (`mysql-connector-j-9.7.0.jar`) em `WEB-INF/lib`
-
-### Passo a passo
-
-**1. Criar o banco de dados** no MySQL Workbench:
-```sql
--- Execute o arquivo banco.sql
+```json
+{
+  "titulo": "Interestelar",
+  "anoLancamento": 2014,
+  "diretor": "Christopher Nolan",
+  "genero": "Sci-Fi",
+  "sinopse": "Filme atualizado."
+}
 ```
 
-**2. Compilar:**
-```bash
-javac -source 8 -target 8 -cp "C:\xampp\tomcat\lib\servlet-api.jar;C:\xampp\tomcat\webapps\pfilmes-corrigido\WEB-INF\lib\mysql-connector-j-9.7.0.jar" -d "C:\xampp\tomcat\webapps\pfilmes-corrigido\WEB-INF\classes" src\main\java\util\ConnectionFactory.java src\main\java\util\JwtUtil.java src\main\java\model\*.java src\main\java\dao\*.java src\main\java\service\*.java src\main\java\filter\JwtFilter.java src\main\java\controller\*.java
+### Excluir filme
+
+`DELETE /api/filmes/1`
+
+## API RESTful de avaliacoes
+
+### Criar avaliacao
+
+`POST /api/avaliacoes`
+
+```json
+{
+  "filmeId": 1,
+  "categoriaId": 1,
+  "nota": 5,
+  "comentario": "Excelente."
+}
 ```
 
-**3. Iniciar o Tomcat** pelo XAMPP Control Panel.
+### Listar avaliacoes
 
-**4. Acessar:**
+`GET /api/avaliacoes`
 
----
+### Buscar avaliacao por id
 
-## ✅ Funcionalidades
+`GET /api/avaliacoes/1`
 
-- [x] Login com autenticação JWT
-- [x] Logout
-- [x] Rotas protegidas por filtro JWT
-- [x] Listar filmes
-- [x] Cadastrar filme (Create)
-- [x] Editar filme (Update)
-- [x] Excluir filme (Delete)
-- [x] Avaliar filme com nota de 1 a 5 estrelas por categoria
-- [x] Ranking de filmes por categoria
-- [x] API RESTful com respostas JSON
-- [x] Padrão Singleton no ConnectionFactory
-- [x] Padrão MVC com camadas Controller, Service e DAO
+### Atualizar avaliacao
+
+`PUT /api/avaliacoes/1`
+
+```json
+{
+  "filmeId": 1,
+  "categoriaId": 1,
+  "nota": 4,
+  "comentario": "Comentario atualizado."
+}
+```
+
+### Excluir avaliacao
+
+`DELETE /api/avaliacoes/1`
+
+## Categorias e ranking
+
+Listar categorias:
+
+`GET /api/categorias`
+
+Ranking por categoria:
+
+`GET /api/avaliacoes/ranking?categoriaId=1`
+
+## Telas JSP
+
+- `/login.jsp`: login.
+- `/filmes`: lista de filmes.
+- `/filmes?action=novo`: cadastro.
+- `/filmes?action=editar&id=1`: edicao.
+- `/avaliacoes?action=form&filmeId=1`: avaliar filme.
+- `/avaliacoes?action=ranking&categoriaId=1`: ranking.
+
+##Como compilar
+No terminal PowerShell do VS Code:
+$env:JAVA_HOME="C:\Program Files\Java\jdk1.8.0_202"
+$env:Path="$env:JAVA_HOME\bin;$env:Path"
+
+New-Item -ItemType Directory -Force -Path target\classes
+
+javac -encoding UTF-8 `
+  -cp "C:\xampp\tomcat\lib\servlet-api.jar" `
+  -d target\classes `
+  (Get-ChildItem src\main\java -Recurse -Filter *.java | ForEach-Object { $_.FullName })
+
+##Como gerar o WAR (copie a pasta para tomcat/webapps):
+New-Item -ItemType Directory -Force -Path target\*nome pasta*-war
+Copy-Item src\main\webapp\* target\*nome pasta*-war -Recurse -Force
+
+New-Item -ItemType Directory -Force -Path target\*nome pasta-war\WEB-INF\classes
+Copy-Item target\classes\* target\*nome pasta-war\WEB-INF\classes -Recurse -Force
+
+New-Item -ItemType Directory -Force -Path target\*nome pasta-war\WEB-INF\lib
+Copy-Item "..\WEB-INF\lib\mysql-connector-j-9.7.0.jar" target\*nome pasta-war\WEB-INF\lib -Force
+
+jar -cf target\*nome pasta.war -C target\*nome pasta-war .
+
+##Como executar no Tomcat:
+Copy-Item target\*nome pasta.war C:\xampp\tomcat\webapps\*nome pasta.war -Force
